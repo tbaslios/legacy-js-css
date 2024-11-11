@@ -22,3 +22,10 @@ document.querySelector('#app').innerHTML = `
 `
 
 setupCounter(document.querySelector('#counter'))
+  let isBig = false;
+  let num = 100;
+  console.log(isBig, num);
+  num = 8_675_309;
+  console.log(isBig, num);
+  isBig ||= num > 999;
+  console.log(isBig, num);
