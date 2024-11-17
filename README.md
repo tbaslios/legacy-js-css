@@ -48,10 +48,12 @@ We will make 4 Sankey diagrams (more details follow) using data from JMU which y
 1. leftmost node: JMU Student
 1. second-to-leftmost nodes: Fall, Spring
 1. rightmost nodes: the `student itemized` costs from the `student-costs`
+Thomas (I DID THIS ONE)
 
 ### Sankey 2: JMU Student Auxiliary Comprehensive Fee
 1. leftmost node: Auxiliary Comprehensive Fee (or "Comprehensive Fee")
 1. rightmost nodes: the `Auxiliary Comprehensive Fee Component` costs from the `student-costs`
+Theo
 
 ### Sankey 3: JMU Revenues
 1. leftmost nodes: JMU (positive) Revenue items
@@ -59,6 +61,7 @@ We will make 4 Sankey diagrams (more details follow) using data from JMU which y
 1. center node: JMU 
 1. second-to-rightmost nodes: JMU Expense (negative revenue) Categories (e.g. operating expenses)
 1. rightmost nodes: JMU Expense items (e.g. Instruction, Research, etc.)
+Steve
 
 ### Sankey 4: JMU Athletics Revenues
 
@@ -67,7 +70,7 @@ We will make 4 Sankey diagrams (more details follow) using data from JMU which y
 1. center node: JMU Athletics
 1. second-to-rightmost nodes: JMU Athletics Expense categories (negative revenue) (e.g. Athletic student aid, etc.)
 1. rightmost nodes: football, men's basketball, women's basketball, other sports, non-program specific
-
+Bailey?
 
 
 

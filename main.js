@@ -21,11 +21,47 @@ const sankey = d3Sankey.sankey()
   .nodePadding(10)
   .extent([[1, 5], [width - 1, height - 5]]);
 
+function processJmuData(data) {
+  const nodes = [];
+  const links = [];
+  const nodeMap = new Map();
+
+  function addNode(name) {
+    console.log(data);
+    if (!nodeMap.has(name)) {
+      const newNode = {name: name};
+      nodes.push(newNode);
+      nodeMap.set(name, newNode);
+    }
+    return nodeMap.get(name);
+  }
+  addNode("JMU Student");
+  addNode("Fall");
+  addNode("Spring");
+  data["student-cost"].forEach(item => {
+    const costNode = addNode(item.name);
+    const fallLink = {
+      source: "Fall",
+      target: costNode.name,
+      value: item["in-state"] || item.amount || 0
+    };
+    const springLink = {
+      source: "Spring",
+      target: costNode.name,
+      value: item["in-state"] || item.amount || 0
+    };
+    links.push(fallLink);
+    links.push(springLink);
+  });
+  return {nodes, links};
+}
+
 async function init() {
-  const data = await d3.json("data/data_sankey.json");
+  const data = await d3.json("data/jmu.json");
   // Applies it to the data. We make a copy of the nodes and links objects
   // so as to avoid mutating the original.
-  const { nodes, links } = sankey({
+  const {nodes, links} = processJmuData(data);
+  const sankeyData = sankey({
   // const tmp = sankey({
     nodes: data.nodes.map(d => Object.assign({}, d)),
     links: data.links.map(d => Object.assign({}, d))
@@ -42,7 +78,7 @@ async function init() {
   const rect = svg.append("g")
     .attr("stroke", "#000")
     .selectAll()
-    .data(nodes)
+    .data(sankeyData.nodes)
     .join("rect")
     .attr("x", d => d.x0)
     .attr("y", d => d.y0)
