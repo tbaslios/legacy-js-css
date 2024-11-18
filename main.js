@@ -35,10 +35,15 @@ function processJmuData(data) {
     }
     return nodeMap.get(name);
   }
+  const studentCosts = data["student-costs"];
+  if (!Array.isArray(studentCosts)) {
+    console.error("Missing 'student-costs'");
+    return { nodes, links }; 
+  }
   addNode("JMU Student");
   addNode("Fall");
   addNode("Spring");
-  data["student-cost"].forEach(item => {
+  data["student-costs"].forEach(item => {
     const costNode = addNode(item.name);
     const fallLink = {
       source: "Fall",
@@ -63,8 +68,8 @@ async function init() {
   const {nodes, links} = processJmuData(data);
   const sankeyData = sankey({
   // const tmp = sankey({
-    nodes: data.nodes.map(d => Object.assign({}, d)),
-    links: data.links.map(d => Object.assign({}, d))
+    nodes: nodes.map(d => Object.assign({}, d)),
+    links: links.map(d => Object.assign({}, d))
   });
 
   // console.log('tmp', tmp);
