@@ -27,7 +27,7 @@ function processJmuData(data) {
   const nodeMap = new Map();
 
   function addNode(name) {
-    console.log(data);
+    console.log(data, name);
     if (!nodeMap.has(name)) {
       const newNode = {name: name};
       nodes.push(newNode);
@@ -35,31 +35,29 @@ function processJmuData(data) {
     }
     return nodeMap.get(name);
   }
+
   const studentCosts = data["student-costs"];
   if (!Array.isArray(studentCosts)) {
     console.error("Missing 'student-costs'");
     return { nodes, links }; 
   }
-  addNode("JMU Student");
-  addNode("Fall");
-  addNode("Spring");
   data["student-costs"].forEach(item => {
-    const costNode = addNode(item.name);
-    const fallLink = {
-      source: "Fall",
+    if (item.type === "student itemized") {
+    const semester = item.semester;
+    const name = item.name;
+    const value = item["in-state"] || item.amount || 0
+    const semesterNode = addNode(semester);
+    const costNode = addNode(name);
+    links.push({
+      source: semesterNode.name,
       target: costNode.name,
-      value: item["in-state"] || item.amount || 0
-    };
-    const springLink = {
-      source: "Spring",
-      target: costNode.name,
-      value: item["in-state"] || item.amount || 0
-    };
-    links.push(fallLink);
-    links.push(springLink);
+      value: value
+    });
+    }
   });
   return {nodes, links};
 }
+
 
 async function init() {
   const data = await d3.json("data/jmu.json");
